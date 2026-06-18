@@ -23,6 +23,7 @@ var _desc: String = ""
 var _action_text: String = ""
 var _icon_color: Color = Color(0.2, 0.2, 0.2, 1)
 var _is_selected: bool = false
+var _close_allowed: bool = true  # 是否允许显示关闭按钮
 
 var _normal_style: StyleBoxFlat
 var _selected_style: StyleBoxFlat
@@ -73,8 +74,8 @@ func _sync_visual() -> void:
 		action_button.visible = _is_selected
 		action_button.text = _action_text
 	if close_button:
-		close_button.visible = _is_selected
-		if _is_selected:
+		close_button.visible = _is_selected and _close_allowed
+		if _is_selected and _close_allowed:
 			# 动态定位到卡片右上角
 			var card_size := size
 			close_button.position = Vector2(card_size.x - close_button.size.x - 4, 4)
@@ -105,6 +106,9 @@ func set_action_text(text: String) -> void:
 	_action_text = text
 	if action_button:
 		action_button.text = text
+
+func set_close_allowed(value: bool) -> void:
+	_close_allowed = value
 
 # 点击卡片面板：通知场景选中此卡片
 func _on_gui_input(event: InputEvent) -> void:

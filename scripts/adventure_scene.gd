@@ -166,15 +166,21 @@ func _sync_cards() -> void:
 			var node_type_val: int = cm.node_type(line_idx)
 			_slot_card_data.append(line_idx)
 			slot.visible = true
+			slot.modulate.a = 1.0
 			slot.set_slot_index(i)
 			slot.set_title(cm.node_title(line_idx))
 			slot.set_desc(cm.node_description(line_idx))
 			slot.set_icon_color(CARD_COLORS.get(node_type_val, Color(0.2, 0.2, 0.2, 1)))
 			slot.set_action_text(_node_action_text(node_type_val))
+			slot.set_close_allowed(cm.is_close_allowed(line_idx))
 		else:
 			_slot_card_data.append(-1)
-			slot.visible = false
+			slot.visible = true
+			slot.modulate.a = 1.0
+			slot.set_slot_index(i)
 			slot.set_selected(false)
+			slot.set_close_allowed(false)
+			slot.modulate.a = 0.0
 
 # --- 卡片交互处理 ---
 

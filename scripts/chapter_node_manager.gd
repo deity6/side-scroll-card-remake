@@ -235,7 +235,8 @@ func can_enter(line_idx: int) -> bool:
 func is_close_allowed(line_idx: int) -> bool:
 	if not can_enter(line_idx): return false
 	var t: int = lines[line_idx][0]["type"]
-	return t != NodeType.BOSS
+	# 战斗节点（普通/精英/BOSS）和下一章节点不允许关闭
+	return t != NodeType.BATTLE and t != NodeType.ELITE and t != NodeType.BOSS and t != NodeType.NEXT_CHAPTER
 
 func node_type(line_idx: int) -> int:
 	if not can_enter(line_idx): return -1
@@ -306,12 +307,10 @@ func resolve_enter(line_idx: int) -> int:
 		NodeType.NEXT_CHAPTER:
 			next_chapter_requested.emit()
 			return t
-	# BOSS击败后：将其他线路头部替换为NEXT_CHAPTER
+	# BOSS击败后：在每条线路末尾追加NEXT_CHAPTER节点
 	if t == NodeType.BOSS and boss_defeated:
 		for i in range(LINE_COUNT):
-			if i == line_idx: continue
-			if lines[i].size() > 0 and int(lines[i][0]["type"]) != NodeType.NEXT_CHAPTER:
-				lines[i][0] = {"type": NodeType.NEXT_CHAPTER, "index": 0}
+			lines[i].append({"type": NodeType.NEXT_CHAPTER, "index": 0})
 	nodes_changed.emit()
 	return t
 
