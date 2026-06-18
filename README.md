@@ -1,8 +1,8 @@
-﻿# 横版卡牌复刻 (Side-scrolling Card Game Remake)
+# 卡牌复刻 (Portrait Card Game Remake)
 
-> Godot 4.4 · GDScript · 原型阶段 v0.2
+> Godot 4.4.x · GDScript · 原型阶段 v0.3
 
-一个受 Slay the Spire 启发的横版卡牌 Roguelike 原型项目，使用 Godot 引擎开发。
+一个受 Slay the Spire 启发的卡牌 Roguelike 原型项目，使用 Godot 引擎开发。
 
 ## 核心功能
 
@@ -11,6 +11,14 @@
 - **能量系统**：每回合 3 点能量，卡牌消耗能量打出
 - **护盾机制**：防御卡提供格挡值，优先消耗护盾再扣减生命
 - **伤害计算**：攻击卡先破盾再扣血，支持多种伤害类型
+
+### 🗺️ 冒险模式（v0.3 新增）
+- **三窗口节点选择**：3条独立线路，每条线路排队展示节点卡片
+- **随机池系统**：开局一次性从随机池抽取所有节点分配到3条线路，用户操作只删不补
+- **战斗累加器**：初阶/中阶战斗累加值控制精英怪和BOSS的解锁时机
+- **节点类型**：普通怪、精英怪、BOSS、休息、铁匠、商店、宝箱
+- **卡片交互**：选中发光、动作按钮进入节点、关闭按钮跳过节点（均带销毁动画）
+- **存档系统**：冒险进度自动存档到 user://savegame.cfg，支持继续游戏
 
 ### 🎮 战斗流程
 - 玩家回合：抽牌 → 出牌 → 结束回合
@@ -36,28 +44,44 @@
 | 重击 | 攻击 | 2 | 造成 12 点伤害 |
 
 ### 📐 项目结构
-`
-横版卡牌复刻/
-├── scenes/          # 场景文件（主菜单、战斗场景）
-├── scripts/         # 游戏逻辑脚本
-│   ├── battle_scene.gd       # 战斗场景 UI 逻辑
-│   ├── battle_demo_state.gd  # 战斗核心状态机
-│   ├── main_menu.gd          # 主菜单逻辑
-│   ├── settings_manager.gd   # 全局设置管理器（Autoload）
-│   ├── jelly_slider.gd       # 弹性滑块控件
-│   └── demo_battle.gd        # 简易战斗展示
-├── docs/ai_prompts/ # AI 辅助开发提示词文档
-├── addons/          # Godot MCP 插件（开发辅助）
-└── project.godot    # Godot 项目配置
-`
+```
+卡牌复刻/
+├── scenes/                # 场景文件
+│   ├── main_menu.tscn     #   主菜单
+│   ├── adventure_scene.tscn  #   冒险模式界面
+│   ├── demo_battle.tscn   #   战斗场景
+│   └── adventure_tooltip.tscn #  气泡提示
+├── scripts/               # 游戏逻辑脚本
+│   ├── adventure_scene.gd       # 冒险场景主控制器
+│   ├── adventure_card.gd        # 冒险模式卡片组件
+│   ├── chapter_node_manager.gd  # 随机池 & 线路排队系统
+│   ├── adventure_state.gd       # 冒险状态管理 & 存档
+│   ├── adventure_player_state.gd # 冒险玩家状态
+│   ├── battle_scene.gd          # 战斗场景 UI 逻辑
+│   ├── battle_demo_state.gd     # 战斗核心状态机
+│   ├── main_menu.gd             # 主菜单逻辑
+│   ├── settings_manager.gd      # 全局设置管理器（Autoload）
+│   └── jelly_slider.gd          # 弹性滑块控件
+├── docs/ai_prompts/       # AI 辅助开发提示词文档
+├── addons/                # Godot MCP 插件（开发辅助）
+└── project.godot          # Godot 项目配置
+```
 
 ## 运行方式
 
-1. 使用 **Godot 4.4** 打开 project.godot
-2. 按 F5 运行，从主菜单进入战斗
+1. 使用 **Godot 4.4.1** 打开 `project.godot`
+2. 按 F5 运行，从主菜单进入冒险或战斗
+
+## 版本历史
+
+| 版本 | 说明 |
+|------|------|
+| v2.0 | 基础卡牌战斗原型：抽牌/出牌/弃牌循环、能量系统、护盾机制、主菜单/设置 |
+| v0.3 | 冒险模式：随机池排队系统、三窗口节点选择、卡片交互、存档系统 |
 
 ## 后续规划
 
+- 冒险模式完善：战斗场景对接、休息/铁匠/商店/宝箱功能实现
 - 战斗手感增强（打击特效、屏幕震动、顿帧）
 - 肉鸽流派 / 遗物系统
 - 局外养成（金币、解锁）

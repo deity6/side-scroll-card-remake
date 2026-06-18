@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://ddikab2r7s5np"]
+[gd_scene load_steps=4 format=3 uid="uid://ddikab2r7s5np"]
 
 [ext_resource type="Script" uid="uid://b32ymrwxbgpxc" path="res://scripts/main_menu.gd" id="1"]
+[ext_resource type="Script" uid="uid://cv68uoj1qjtrj" path="res://scripts/press_effect.gd" id="2_bqqt6"]
 [ext_resource type="Script" uid="uid://djb8vd6pebg8u" path="res://scripts/jelly_slider.gd" id="jelly"]
 
 [node name="MainMenu" type="Control"]
@@ -26,10 +27,6 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 45.0
-offset_top = 56.0
-offset_right = 45.0
-offset_bottom = 56.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 24
@@ -48,7 +45,7 @@ theme_override_constants/separation = 20
 
 [node name="Title" type="Label" parent="MarginContainer/HSplit/Left"]
 layout_mode = 2
-text = "竖版卡牌复刻"
+text = "卡牌复刻"
 horizontal_alignment = 1
 
 [node name="StartButton" type="Button" parent="MarginContainer/HSplit/Left"]
@@ -58,6 +55,18 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "开始冒险"
 
+[node name="PressEffect" type="Node" parent="MarginContainer/HSplit/Left/StartButton"]
+script = ExtResource("2_bqqt6")
+metadata/_custom_type_script = "uid://cv68uoj1qjtrj"
+
+[node name="ContinueButton" type="Button" parent="MarginContainer/HSplit/Left"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(220, 52)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "继续冒险"
+
 [node name="SettingsButton" type="Button" parent="MarginContainer/HSplit/Left"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(220, 52)
@@ -65,12 +74,20 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "设置"
 
+[node name="PressEffect" type="Node" parent="MarginContainer/HSplit/Left/SettingsButton"]
+script = ExtResource("2_bqqt6")
+metadata/_custom_type_script = "uid://cv68uoj1qjtrj"
+
 [node name="QuitButton" type="Button" parent="MarginContainer/HSplit/Left"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(220, 52)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "退出游戏"
+
+[node name="PressEffect" type="Node" parent="MarginContainer/HSplit/Left/QuitButton"]
+script = ExtResource("2_bqqt6")
+metadata/_custom_type_script = "uid://cv68uoj1qjtrj"
 
 [node name="VersionLabel" type="Label" parent="MarginContainer/HSplit/Left"]
 unique_name_in_owner = true

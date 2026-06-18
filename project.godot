@@ -12,7 +12,7 @@ config_version=5
 
 [application]
 
-config/name="竖版卡牌复刻"
+config/name="卡牌复刻"
 run/main_scene="res://scenes/main_menu.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
@@ -20,7 +20,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 SettingsManager="*res://scenes/settings_manager.tscn"
-MCPGameBridge="res://addons/godot_mcp/game_bridge/mcp_game_bridge.gd"
+MCPGameBridge="*res://addons/godot_mcp/game_bridge/mcp_game_bridge.gd"
 
 [display]
 
@@ -29,7 +29,7 @@ window/size/viewport_height=1280
 
 [dotnet]
 
-project/assembly_name="竖版卡牌复刻"
+project/assembly_name="卡牌复刻"
 
 [editor_plugins]
 

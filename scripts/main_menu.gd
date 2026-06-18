@@ -1,41 +1,32 @@
 extends Control
 
-var SettingsManager: Node = null
+# ============================================================
+# 主菜单场景控制器
+# 管理开始冒险、继续冒险、设置面板、语言切换
+# 支持存档检测、二次确认新冒险
+# 按钮果冻动画由 PressEffect 组件统一处理
+# ============================================================
 
-@onready var settings_panel: Control = %SettingsPanel
+var SettingsManager: Node = null  # 全局设置管理器引用
 
-@onready var settings_button: Button = %SettingsButton
-
-@onready var start_button: Button = %StartButton
-
-@onready var quit_button: Button = %QuitButton
-
-@onready var version_label: Label = %VersionLabel
-
-@onready var master_slider: HSlider = %MasterSlider
-
-@onready var sfx_slider: HSlider = %SFXSlider
-
-@onready var bgm_slider: HSlider = %BGMSlider
-
-@onready var language_option: OptionButton = %LanguageOption
-
-@onready var apply_button: Button = %ApplyButton
-
-@onready var close_button: Button = %CloseButton
-
-@onready var status_label: Label = %StatusLabel
-
-var _button_tween: Tween = null
-
+# --- UI节点引用（%唯一名称绑定）---
+@onready var settings_panel: Control = %SettingsPanel   # 设置面板
+@onready var settings_button: Button = %SettingsButton # 设置按钮
+@onready var start_button: Button = %StartButton       # 开始冒险按钮
+@onready var quit_button: Button = %QuitButton         # 退出游戏按钮
+@onready var version_label: Label = %VersionLabel      # 版本号标签
+@onready var master_slider: HSlider = %MasterSlider    # 主音量滑块
+@onready var sfx_slider: HSlider = %SFXSlider          # 音效滑块
+@onready var bgm_slider: HSlider = %BGMSlider          # 背景音乐滑块
+@onready var language_option: OptionButton = %LanguageOption  # 语言选择下拉框
+@onready var apply_button: Button = %ApplyButton       # 应用设置按钮
+@onready var close_button: Button = %CloseButton       # 关闭设置按钮
+@onready var status_label: Label = %StatusLabel        # 设置状态提示标签
+@onready var continue_button: Button = %ContinueButton # 继续冒险按钮
 
 func _ready() -> void:
 	SettingsManager = get_node("/root/SettingsManager")
-	_setup_button_press_effect(settings_button)
-	_setup_button_press_effect(start_button)
-	_setup_button_press_effect(quit_button)
-	_setup_button_press_effect(apply_button)
-	_setup_button_press_effect(close_button)
+	continue_button.pressed.connect(_on_continue_pressed)
 	settings_button.pressed.connect(_on_settings_pressed)
 	start_button.pressed.connect(_on_start_pressed)
 	quit_button.pressed.connect(_on_quit_pressed)
@@ -47,37 +38,8 @@ func _ready() -> void:
 	language_option.item_selected.connect(_on_language_changed)
 	SettingsManager.settings_changed.connect(_apply_localization)
 	_load_settings_to_ui()
+	_check_continue()
 	_apply_localization()
-
-func _setup_button_press_effect(btn: Button) -> void:
-	btn.pivot_offset = btn.custom_minimum_size / 2
-	btn.gui_input.connect(_on_button_input.bind(btn))
-
-func _on_button_input(event: InputEvent, btn: Button) -> void:
-	if event is InputEventMouseButton:
-		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-			_tween_button_down(btn)
-		elif not event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-			_tween_button_up(btn)
-	elif event is InputEventScreenTouch:
-		if event.pressed:
-			_tween_button_down(btn)
-		elif not event.pressed:
-			_tween_button_up(btn)
-
-func _tween_button_down(btn: Button) -> void:
-	if _button_tween:
-		_button_tween.kill()
-	_button_tween = create_tween()
-	_button_tween.tween_property(btn, "scale", Vector2(0.92, 0.92), 0.08).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	_button_tween.tween_property(btn, "scale", Vector2(0.95, 0.95), 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
-
-func _tween_button_up(btn: Button) -> void:
-	if _button_tween:
-		_button_tween.kill()
-	_button_tween = create_tween()
-	_button_tween.tween_property(btn, "scale", Vector2(1.08, 1.08), 0.08).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	_button_tween.tween_property(btn, "scale", Vector2(1.0, 1.0), 0.3).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 
 func _on_settings_pressed() -> void:
 	_load_settings_to_ui()
@@ -96,7 +58,13 @@ func _on_apply_pressed() -> void:
 	_refresh_status()
 
 func _on_start_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/battle_scene.tscn")
+	if AdventureState.has_save():
+		_confirm_new_run()
+		return
+	var left = %StartButton.get_parent()
+	var tw = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+	tw.tween_property(left, "position:x", -400.0, 0.4)
+	tw.tween_callback(func(): get_tree().change_scene_to_file("res://scenes/adventure_scene.tscn"))
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
@@ -144,8 +112,30 @@ func _apply_localization() -> void:
 		start_button.text = "Start"
 		quit_button.text = "Quit"
 		version_label.text = "Prototype v0.2"
+		continue_button.text = "Continue"
 	else:
 		settings_button.text = "设置"
 		start_button.text = "开始冒险"
 		quit_button.text = "退出游戏"
 		version_label.text = "原型 v0.2"
+		continue_button.text = "继续冒险"
+
+func _check_continue() -> void:
+	continue_button.visible = AdventureState.has_save()
+
+func _on_continue_pressed() -> void:
+	var tw = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+	var left = %ContinueButton.get_parent()
+	tw.tween_property(left, "position:x", -400.0, 0.4)
+	tw.tween_callback(func(): get_tree().change_scene_to_file("res://scenes/adventure_scene.tscn"))
+
+func _confirm_new_run() -> void:
+	var dialog = ConfirmationDialog.new()
+	dialog.dialog_text = "开始新冒险将覆盖当前存档，确定继续？"
+	dialog.title = "提示"
+	dialog.confirmed.connect(func():
+		AdventureState.delete_save()
+		_on_start_pressed()
+	)
+	add_child(dialog)
+	dialog.popup_centered(Vector2i(320, 160))
