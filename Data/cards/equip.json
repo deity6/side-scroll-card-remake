@@ -1,0 +1,15 @@
+[
+  {
+    "id": "iron_charm",
+    "name": "铁甲挂饰",
+    "type": "equip",
+    "ap_cost": 0,
+    "effect_type": "armor_per_turn",
+    "effect_value": 1,
+    "on_play_armor": 3,
+    "description": "获得3护甲，每回合+1护甲",
+    "flavor_text": "",
+    "rarity": "common",
+    "upgraded_id": ""
+  }
+]

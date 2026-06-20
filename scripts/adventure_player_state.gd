@@ -24,13 +24,16 @@ var exp_to_next: int = 20     # 升级所需经验值
 # --- 战斗属性 ---
 var mana: int = 2             # 当前魔力值
 var max_mana: int = 2         # 最大魔力值
-var action_points: int = 2    # 当前行动力
-var max_action_points: int = 2 # 最大行动力
-var card_limit: int = 3       # 手牌上限
-var cards_drawn_per_turn: int = 3  # 每回合抽卡数
+var action_points: int = 3    # 当前行动力
+var max_action_points: int = 3 # 最大行动力
+var card_limit: int = 10       # 手牌上限
+var cards_drawn_per_turn: int = 5  # 每回合抽卡数
 
 # --- 卡组 ---
 var deck: Array = []          # 玩家拥有的卡牌列表
+# 卡牌定义已迁移到 CardPool（card_pool.gd + Data/cards/*.json）
+# 初始牌组通过 CardPool.get_default_player_deck() 获取
+
 
 # 初始化所有属性为默认值
 func initialize() -> void:
@@ -42,11 +45,14 @@ func initialize() -> void:
 	exp_to_next = 20
 	mana = 2
 	max_mana = 2
-	action_points = 2
-	max_action_points = 2
-	card_limit = 3
-	cards_drawn_per_turn = 3
+	action_points = 3
+	max_action_points = 3
+	card_limit = 10
+	cards_drawn_per_turn = 5
 	deck.clear()
+	# 从卡池构建初始牌组（CardPool 从 JSON 加载卡牌定义）
+	var pool = CardPool.new()
+	deck = pool.get_default_player_deck()
 	stats_changed.emit()
 
 # --- 生命值相关 ---
@@ -101,15 +107,7 @@ func _level_up() -> void:
 	stats_changed.emit()
 
 # --- 回合结束恢复 ---
-
-# 恢复魔力到满值
-func restore_mana() -> void:
-	mana = max_mana
-
-# 恢复行动力到满值
-func restore_action_points() -> void:
-	action_points = max_action_points
-
+# 不恢复魔力和行动值，已删除
 # --- 状态查询 ---
 
 # 玩家是否存活
@@ -131,6 +129,14 @@ func exp_ratio() -> float:
 # --- 存档序列化 ---
 
 # 将所有属性序列化为字典
+# --- 序列化辅助方法 ---
+## 将卡组序列化为数组（GDScript 不支持 list comprehension）
+func _serialize_deck() -> Array:
+	var deck_data: Array = []
+	for card in deck:
+		deck_data.append(card.duplicate())
+	return deck_data
+
 func serialize() -> Dictionary:
 	return {
 		"hp": hp, "max_hp": max_hp, "gold": gold,
@@ -138,6 +144,7 @@ func serialize() -> Dictionary:
 		"mana": mana, "max_mana": max_mana,
 		"action_points": action_points, "max_action_points": max_action_points,
 		"card_limit": card_limit, "cards_drawn_per_turn": cards_drawn_per_turn,
+		"deck": _serialize_deck(),
 	}
 
 # 从字典反序列化恢复属性
@@ -150,8 +157,14 @@ func deserialize(data: Dictionary) -> void:
 	exp_to_next = data.get("exp_to_next", 20)
 	mana = data.get("mana", 2)
 	max_mana = data.get("max_mana", 2)
-	action_points = data.get("action_points", 2)
-	max_action_points = data.get("max_action_points", 2)
-	card_limit = data.get("card_limit", 3)
-	cards_drawn_per_turn = data.get("cards_drawn_per_turn", 3)
+	action_points = data.get("action_points", 3)
+	max_action_points = data.get("max_action_points", 3)
+	card_limit = data.get("card_limit", 10)
+	cards_drawn_per_turn = data.get("cards_drawn_per_turn", 5)
+	# 恢复卡组（如果存档中有 deck 数据，否则使用默认牌组）
+	var saved_deck = data.get("deck", [])
+	if saved_deck is Array and saved_deck.size() > 0:
+		deck.clear()
+		for card in saved_deck:
+			deck.append(card.duplicate())
 	stats_changed.emit()

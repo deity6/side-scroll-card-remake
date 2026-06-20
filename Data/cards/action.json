@@ -1,0 +1,62 @@
+[
+  {
+    "id": "defend_1",
+    "name": "防御姿态",
+    "type": "action",
+    "ap_cost": 0,
+    "effect_type": "armor",
+    "effect_value": 5,
+    "description": "获得5点护甲",
+    "flavor_text": "",
+    "rarity": "common",
+    "upgraded_id": ""
+  },
+  {
+    "id": "defend_2",
+    "name": "防御姿态",
+    "type": "action",
+    "ap_cost": 0,
+    "effect_type": "armor",
+    "effect_value": 5,
+    "description": "获得5点护甲",
+    "flavor_text": "",
+    "rarity": "common",
+    "upgraded_id": ""
+  },
+  {
+    "id": "heal_potion",
+    "name": "治疗药水",
+    "type": "action",
+    "ap_cost": 1,
+    "effect_type": "heal",
+    "effect_value": 8,
+    "description": "恢复8点HP",
+    "flavor_text": "",
+    "rarity": "common",
+    "upgraded_id": ""
+  },
+  {
+    "id": "tactical_roll",
+    "name": "战术翻滚",
+    "type": "action",
+    "ap_cost": 1,
+    "effect_type": "armor_and_draw",
+    "effect_value": 3,
+    "description": "获得3点护甲，抽1张牌",
+    "flavor_text": "",
+    "rarity": "common",
+    "upgraded_id": ""
+  },
+  {
+    "id": "adrenaline",
+    "name": "肾上腺素",
+    "type": "action",
+    "ap_cost": 0,
+    "effect_type": "restore_ap",
+    "effect_value": 2,
+    "description": "恢复2点行动力",
+    "flavor_text": "",
+    "rarity": "common",
+    "upgraded_id": ""
+  }
+]

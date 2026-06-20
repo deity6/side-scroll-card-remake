@@ -1,0 +1,50 @@
+[
+  {
+    "id": "slash_1",
+    "name": "挥砍",
+    "type": "attack",
+    "ap_cost": 0,
+    "effect_type": "damage",
+    "effect_value": 6,
+    "description": "造成6点伤害",
+    "flavor_text": "",
+    "rarity": "common",
+    "upgraded_id": ""
+  },
+  {
+    "id": "slash_2",
+    "name": "挥砍",
+    "type": "attack",
+    "ap_cost": 0,
+    "effect_type": "damage",
+    "effect_value": 6,
+    "description": "造成6点伤害",
+    "flavor_text": "",
+    "rarity": "common",
+    "upgraded_id": ""
+  },
+  {
+    "id": "slash_3",
+    "name": "挥砍",
+    "type": "attack",
+    "ap_cost": 0,
+    "effect_type": "damage",
+    "effect_value": 6,
+    "description": "造成6点伤害",
+    "flavor_text": "",
+    "rarity": "common",
+    "upgraded_id": ""
+  },
+  {
+    "id": "heavy_strike",
+    "name": "重击",
+    "type": "attack",
+    "ap_cost": 0,
+    "effect_type": "damage",
+    "effect_value": 10,
+    "description": "造成10点伤害",
+    "flavor_text": "",
+    "rarity": "common",
+    "upgraded_id": ""
+  }
+]

@@ -22,7 +22,7 @@
 ## 冒险界面 - 卡片节点设计
 
 ### 概述
-冒险界面中央区域（%Center，HBoxContainer）显示 3 张节点卡片，分别对应 3 条独立线路的当前头部节点。卡片在 .tscn 中预置（CardSlot1/2/3），运行时由 dventure_scene.gd 填充数据，不动态创建/销毁节点。
+冒险界面中央区域（%Center，HBoxContainer）显示 3 张节点卡片，分别对应 3 条独立线路的当前头部节点。卡片在 .tscn 中预置（CardSlot1/2/3），运行时由  dventure_scene.gd 填充数据，不动态创建/销毁节点。
 
 ### 场景结构（adventure_scene.tscn）
 `
@@ -68,13 +68,15 @@ Center (HBoxContainer, unique_name_in_owner, separation=16, alignment=CENTER)
 ### 关闭销毁动画（adventure_scene.gd）
 - 缩放：scale 从 Vector2.ONE → Vector2(0.5, 0.5)，0.2 秒，EASE_IN + TRANS_BACK
 - 淡出：modulate:a 从 1.0 → 0.0，0.2 秒，与缩放并行
-- 动画结束后调用 esolve_skip(line_idx) 跳过节点（无奖励），然后 _sync_cards() 刷新
+- 动画结束后调用 
+esolve_skip(line_idx) 跳过节点（无奖励），然后 _sync_cards() 刷新
 
 ### 动作按钮（ActionButton）
 - 默认隐藏，选中时显示于卡片底部
 - 文字由场景根据节点类型设置：战斗/精英战斗/BOSS战斗/休息恢复/升级卡牌/进入商店/打开宝箱/前往下一章
 - 点击触发 card_action_requested(slot_index) 信号
-- 场景处理：调用 esolve_enter() 进入节点事件 → 应用奖励 → 刷新 UI
+- 场景处理：调用 
+esolve_enter() 进入节点事件 → 应用奖励 → 刷新 UI
 
 ### 信号设计（adventure_card.gd）
 | 信号 | 参数 | 触发时机 |

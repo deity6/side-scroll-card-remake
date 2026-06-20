@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cncdfdfoefub8"]
+
+[ext_resource type="Script" uid="uid://dq7ubun1ex6f7" path="res://scripts/battle_card.gd" id="1"]
+
+[node name="BattleCard" type="PanelContainer"]
+script = ExtResource("1")

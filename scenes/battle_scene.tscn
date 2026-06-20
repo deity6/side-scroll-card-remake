@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://bvx55x7nnjr6v"]
+[gd_scene load_steps=2 format=3 uid="uid://bwlk2f2g05gyl"]
 
 [ext_resource type="Script" uid="uid://fdn7g01rkqwl" path="res://scripts/battle_scene.gd" id="1"]
 
@@ -11,100 +11,315 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.1, 0.1, 0.12, 1)
+color = Color(0.08, 0.1, 0.18, 1)
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="EnemyArea" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
+offset_bottom = 300.0
 grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 24
-theme_override_constants/margin_top = 24
-theme_override_constants/margin_right = 24
-theme_override_constants/margin_bottom = 24
+theme_override_constants/separation = 8
 
-[node name="VBox" type="VBoxContainer" parent="MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 16
-
-[node name="TitleLabel" type="Label" parent="MarginContainer/VBox"]
+[node name="EnemyNameLabel" type="Label" parent="EnemyArea"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "战斗原型"
+theme_override_font_sizes/font_size = 18
+text = "敌人"
 horizontal_alignment = 1
 
-[node name="HSplit" type="HSplitContainer" parent="MarginContainer/VBox"]
-custom_minimum_size = Vector2(0, 220)
+[node name="EnemySprite" type="ColorRect" parent="EnemyArea"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 150)
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_horizontal = 4
+color = Color(0.3, 0.3, 0.35, 1)
 
-[node name="Info" type="VBoxContainer" parent="MarginContainer/VBox/HSplit"]
+[node name="EnemyHPBar" type="ProgressBar" parent="EnemyArea"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(250, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+max_value = 25.0
+value = 25.0
+show_percentage = false
+
+[node name="EnemyHPLabel" type="Label" parent="EnemyArea"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "25/25"
+horizontal_alignment = 1
+
+[node name="PlayerArea" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 1128.0
+offset_bottom = 1278.0
+grow_horizontal = 2
+theme_override_constants/separation = 4
+
+[node name="HPRow" type="HBoxContainer" parent="PlayerArea"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="PlayerHPBar" type="ProgressBar" parent="PlayerArea/HPRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 18)
+layout_mode = 2
+max_value = 52.0
+value = 52.0
+show_percentage = false
+
+[node name="PlayerHPLabel" type="Label" parent="PlayerArea/HPRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "HP: 52/52"
+
+[node name="InfoRow" type="HBoxContainer" parent="PlayerArea"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="PlayerArmorLabel" type="Label" parent="PlayerArea/InfoRow"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.7, 0.9, 1)
+theme_override_font_sizes/font_size = 12
+text = "护甲: 0"
+
+[node name="PlayerAPLabel" type="Label" parent="PlayerArea/InfoRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.8, 0.2, 1)
+theme_override_font_sizes/font_size = 12
+text = "AP: 3"
+
+[node name="TurnLabel" type="Label" parent="PlayerArea/InfoRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_font_sizes/font_size = 12
+text = "回合 1"
+
+[node name="EquipRow" type="HBoxContainer" parent="PlayerArea"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="EquipLabel" type="Label" parent="PlayerArea/EquipRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.8, 0.5, 1)
+theme_override_font_sizes/font_size = 10
+text = "装备:"
+
+[node name="EquipContainer" type="HBoxContainer" parent="PlayerArea/EquipRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CardArea" type="Control" parent="."]
+layout_mode = 1
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -256.0
+offset_bottom = -206.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HandContainer" type="Control" parent="CardArea"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BottomBar" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -50.0
+offset_right = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="DeckCountLabel" type="Label" parent="BottomBar"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "牌库: 0"
+
+[node name="Spacer" type="Control" parent="BottomBar"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 10
 
-[node name="PlayerLabel" type="Label" parent="MarginContainer/VBox/HSplit/Info"]
+[node name="DiscardCountLabel" type="Label" parent="BottomBar"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "玩家 生命:40 护甲:0 能量:3 回合:1"
+theme_override_font_sizes/font_size = 12
+text = "弃牌堆: 0"
 
-[node name="EnemyLabel" type="Label" parent="MarginContainer/VBox/HSplit/Info"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "敌人 生命:30 护甲:0"
-
-[node name="DeckLabel" type="Label" parent="MarginContainer/VBox/HSplit/Info"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "牌库:3"
-
-[node name="DiscardLabel" type="Label" parent="MarginContainer/VBox/HSplit/Info"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "弃牌堆:0"
-
-[node name="ResultLabel" type="Label" parent="MarginContainer/VBox/HSplit/Info"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="Actions" type="VBoxContainer" parent="MarginContainer/VBox/HSplit"]
+[node name="Spacer2" type="Control" parent="BottomBar"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 10
 
-[node name="EndTurnButton" type="Button" parent="MarginContainer/VBox/HSplit/Actions"]
+[node name="BackButton" type="Button" parent="BottomBar"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(180, 44)
-layout_mode = 2
-text = "结束回合"
-
-[node name="RestartButton" type="Button" parent="MarginContainer/VBox/HSplit/Actions"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(180, 44)
-layout_mode = 2
-text = "重新开始"
-
-[node name="BackButton" type="Button" parent="MarginContainer/VBox/HSplit/Actions"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(180, 44)
+custom_minimum_size = Vector2(60, 36)
 layout_mode = 2
 text = "返回"
 
-[node name="HandLabel" type="Label" parent="MarginContainer/VBox"]
-layout_mode = 2
-text = "手牌"
+[node name="EndTurnButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -140.0
+offset_top = -100.0
+offset_right = -16.0
+offset_bottom = -56.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "回合结束"
 
-[node name="HandContainer" type="HBoxContainer" parent="MarginContainer/VBox"]
+[node name="DebugPanel" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+offset_left = 10.0
+offset_right = 290.0
+offset_bottom = 50.0
+theme_override_constants/separation = 8
+
+[node name="DebugLineEdit" type="LineEdit" parent="DebugPanel"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_horizontal = 3
+placeholder_text = "数量"
+
+[node name="DebugAddButton" type="Button" parent="DebugPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "加牌"
+
+[node name="DebugHpEdit" type="LineEdit" parent="DebugPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "血量+/-"
+
+[node name="DebugHpButton" type="Button" parent="DebugPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "改血"
+
+[node name="DebugShuffleButton" type="Button" parent="DebugPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "洗牌"
+
+[node name="DebugApEdit" type="LineEdit" parent="DebugPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "行动力+/-"
+
+[node name="DebugApButton" type="Button" parent="DebugPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "改AP"
+
+[node name="ResultPanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -100.0
+offset_right = 150.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="ResultPanel"]
+layout_mode = 2
 theme_override_constants/separation = 12
+alignment = 1
+
+[node name="ResultTitleLabel" type="Label" parent="ResultPanel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "战斗结果"
+horizontal_alignment = 1
+
+[node name="ResultDescLabel" type="Label" parent="ResultPanel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+horizontal_alignment = 1
+
+[node name="ExpBar" type="ProgressBar" parent="ResultPanel/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 20)
+layout_mode = 2
+max_value = 20.0
+show_percentage = false
+
+[node name="ExpLabel" type="Label" parent="ResultPanel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "0/20"
+horizontal_alignment = 1
+
+[node name="LevelUpLabel" type="Label" parent="ResultPanel/VBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+horizontal_alignment = 1
+
+[node name="ResultConfirmButton" type="Button" parent="ResultPanel/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 36)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "确定"
+
+[node name="ResultRetryButton" type="Button" parent="ResultPanel/VBox"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(120, 36)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "重试"

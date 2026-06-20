@@ -21,6 +21,7 @@ config/icon="res://icon.svg"
 
 SettingsManager="*res://scenes/settings_manager.tscn"
 MCPGameBridge="*res://addons/godot_mcp/game_bridge/mcp_game_bridge.gd"
+GlobalBattleRequest="*res://scripts/global_battle_request.gd"
 
 [display]
 

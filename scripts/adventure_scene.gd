@@ -8,6 +8,12 @@ extends Control
 
 # --- 常量 ---
 const TOOLTIP_SCENE_PATH := "res://scenes/adventure_tooltip.tscn" # 气泡提示场景路径
+# 战斗类节点类型集合（用于判断是否跳转战斗场景）
+const BATTLE_TYPES: Array = [
+	ChapterNodeManager.NodeType.BATTLE,
+	ChapterNodeManager.NodeType.ELITE,
+	ChapterNodeManager.NodeType.BOSS,
+]
 
 # 各节点类型对应的卡片颜色（色块显示）
 const CARD_COLORS := {
@@ -110,6 +116,7 @@ func _ready() -> void:
 	_refresh_hud()         # 刷新HUD显示
 	_sync_ui()             # 同步三窗口卡片
 	_debug_print_lines()   # [DEBUG] 打印三条线路节点顺序
+	_handle_battle_return()  # 检查战斗返回结果
 
 # 根据当前语言设置UI文本
 func _apply_localization() -> void:
@@ -225,22 +232,75 @@ func _on_card_action_requested(slot_idx: int) -> void:
 	if slot_idx < 0 or slot_idx >= _slot_card_data.size(): return
 	var line_idx: int = _slot_card_data[slot_idx]
 	if not chapter.chapter_manager.can_enter(line_idx): return
-	# 先取消选中状态
+	var node_type := chapter.chapter_manager.node_type(line_idx)
+	# 战斗类节点：跳转战斗场景
+	if node_type in BATTLE_TYPES:
+		_enter_battle(node_type, line_idx)
+		return
+	# 非战斗类节点：保持现有逻辑
 	var slots: Array[PanelContainer] = [card_slot1, card_slot2, card_slot3]
 	var slot: PanelContainer = slots[slot_idx]
 	slot.set_selected(false)
-	# 播放销毁动画（快速淡出+缩放）
 	var tw = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
 	tw.tween_property(slot, "scale", Vector2(0.5, 0.5), 0.15)
 	tw.parallel().tween_property(slot, "modulate:a", 0.0, 0.15)
 	tw.tween_callback(func():
-		var node_type := chapter.chapter_manager.resolve_enter(line_idx)
-		_apply_node_reward(node_type)  # 应用节点奖励
-		# 重置卡片视觉状态（为下一个节点准备）
+		var resolved_type := chapter.chapter_manager.resolve_enter(line_idx)
+		_apply_node_reward(resolved_type)
 		slot.scale = Vector2.ONE
 		slot.modulate.a = 1.0
-		_sync_cards()  # 刷新所有卡片（补充下一个节点）
+		_sync_cards()
 	)
+
+# 进入战斗场景
+func _enter_battle(node_type: int, line_idx: int) -> void:
+	chapter.chapter_manager.resolve_enter(line_idx)
+	AdventureState.save_run(chapter.serialize())
+	var gbr = get_node_or_null("/root/GlobalBattleRequest")
+	if gbr:
+		gbr.set_request(node_type, player.hp, player.max_hp,
+			player.action_points, player.deck, [])
+		gbr.hand_limit = player.card_limit
+		# 传入经验/等级数据（战斗胜利面板需要）
+		gbr.player_exp = player.experience
+		gbr.player_level = player.level
+		gbr.player_exp_to_next = player.exp_to_next
+		gbr.reward_exp = gbr.get_reward_exp()
+		gbr.reward_gold = gbr.get_reward_gold()
+	get_tree().change_scene_to_file("res://scenes/battle_scene.tscn")
+
+# 战斗返回后处理
+func _handle_battle_return() -> void:
+	var gbr = get_node_or_null("/root/GlobalBattleRequest")
+	if not gbr or not gbr.has_request:
+		return
+	# 无论胜/负/退出，都回写战斗后的实际HP
+	if gbr.result_player_hp > 0:
+		player.hp = gbr.result_player_hp
+	# 回写行动力（战斗中消耗的AP保留到下次战斗）
+	if gbr.result_ap >= 0:
+		player.action_points = gbr.result_ap
+	# 回写战斗胜利面板计算后的经验/等级
+	if gbr.result_level > 0:
+		player.level = gbr.result_level
+		player.experience = gbr.result_exp_value
+		player.exp_to_next = gbr.result_exp_to_next
+	# 回写升级带来的属性变化
+	if gbr.result_max_hp > 0:
+		player.max_hp = gbr.result_max_hp
+		player.hp = mini(player.hp, player.max_hp)
+	if gbr.result_max_mana > 0:
+		player.max_mana = gbr.result_max_mana
+		player.mana = player.max_mana
+	# 胜利时额外发放奖励
+	if gbr.result == "win":
+		player.add_gold(gbr.result_gold)
+	# 注意：经验/等级已由战斗面板计算并同步，不再重复 add_experience
+	# 存档更新
+	AdventureState.save_run(chapter.serialize())
+	gbr.clear_request()
+	_refresh_hud()
+	_sync_cards()
 
 # 根据节点类型应用奖励
 func _apply_node_reward(node_type: int) -> void:
