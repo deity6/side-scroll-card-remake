@@ -66,6 +66,8 @@
 
 ## 版本历史
 
+完整更新记录见 `CHANGELOG.md`。
+
 | 版本 | 说明 |
 | --- | --- |
 | v0.3.2 | 春日森林 battle scene 与萌宠 battle card 视觉替换；重构卡牌分层、手牌堆叠和 z-index 规划。 |
