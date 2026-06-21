@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://ddikab2r7s5np"]
+[gd_scene load_steps=3 format=3 uid="uid://ddikab2r7s5np"]
 
-[ext_resource type="Script" uid="uid://b32ymrwxbgpxc" path="res://scripts/main_menu.gd" id="1"]
-[ext_resource type="Script" uid="uid://cv68uoj1qjtrj" path="res://scripts/press_effect.gd" id="2_bqqt6"]
+[ext_resource type="Script" uid="uid://7w6y2algnwea" path="res://scenes/main_menu.gd" id="1_ekxnf"]
 [ext_resource type="Script" uid="uid://djb8vd6pebg8u" path="res://scripts/jelly_slider.gd" id="jelly"]
 
 [node name="MainMenu" type="Control"]
@@ -11,168 +10,485 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1")
+script = ExtResource("1_ekxnf")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="FallbackSky" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.08, 0.08, 0.1, 1)
+color = Color(0.55, 0.78, 0.62, 1)
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 24
-theme_override_constants/margin_top = 24
-theme_override_constants/margin_right = 24
-theme_override_constants/margin_bottom = 24
-
-[node name="HSplit" type="HSplitContainer" parent="MarginContainer"]
-layout_mode = 2
-split_offset = -240
-
-[node name="Left" type="VBoxContainer" parent="MarginContainer/HSplit"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 20
-
-[node name="Title" type="Label" parent="MarginContainer/HSplit/Left"]
-layout_mode = 2
-text = "卡牌复刻"
-horizontal_alignment = 1
-
-[node name="StartButton" type="Button" parent="MarginContainer/HSplit/Left"]
+[node name="BackgroundLayers" type="Control" parent="."]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(220, 52)
-layout_mode = 2
-size_flags_horizontal = 4
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BackgroundFar" type="TextureRect" parent="BackgroundLayers"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch_mode = 6
+
+[node name="TreeBody" type="TextureRect" parent="BackgroundLayers"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch_mode = 6
+
+[node name="TreeShadowWash" type="ColorRect" parent="BackgroundLayers"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.02, 0.08, 0.045, 0.28)
+
+[node name="ForegroundLeaves" type="TextureRect" parent="BackgroundLayers"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch_mode = 6
+
+[node name="TitleAnchor" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.11
+anchor_top = 0.06
+anchor_right = 0.89
+anchor_bottom = 0.22
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TitlePlaceholder" type="Label" parent="TitleAnchor"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 34
+text = "游戏名待定"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuLayer" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="StartMenuItem" type="Control" parent="MenuLayer"]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.1
+anchor_top = 0.49
+anchor_right = 0.62
+anchor_bottom = 0.56
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StartTextDark" type="TextureRect" parent="MenuLayer/StartMenuItem"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch_mode = 5
+
+[node name="StartTextGlow" type="TextureRect" parent="MenuLayer/StartMenuItem"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch_mode = 5
+
+[node name="StartFallbackLabel" type="Label" parent="MenuLayer/StartMenuItem"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.88, 0.92, 0.72, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.65)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 34
 text = "开始冒险"
-
-[node name="PressEffect" type="Node" parent="MarginContainer/HSplit/Left/StartButton"]
-script = ExtResource("2_bqqt6")
-metadata/_custom_type_script = "uid://cv68uoj1qjtrj"
-
-[node name="ContinueButton" type="Button" parent="MarginContainer/HSplit/Left"]
-unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(220, 52)
-layout_mode = 2
-size_flags_horizontal = 4
-text = "继续冒险"
-
-[node name="SettingsButton" type="Button" parent="MarginContainer/HSplit/Left"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(220, 52)
-layout_mode = 2
-size_flags_horizontal = 4
-text = "设置"
-
-[node name="PressEffect" type="Node" parent="MarginContainer/HSplit/Left/SettingsButton"]
-script = ExtResource("2_bqqt6")
-metadata/_custom_type_script = "uid://cv68uoj1qjtrj"
-
-[node name="QuitButton" type="Button" parent="MarginContainer/HSplit/Left"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(220, 52)
-layout_mode = 2
-size_flags_horizontal = 4
-text = "退出游戏"
-
-[node name="PressEffect" type="Node" parent="MarginContainer/HSplit/Left/QuitButton"]
-script = ExtResource("2_bqqt6")
-metadata/_custom_type_script = "uid://cv68uoj1qjtrj"
-
-[node name="VersionLabel" type="Label" parent="MarginContainer/HSplit/Left"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "原型 v0.1"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Right" type="PanelContainer" parent="MarginContainer/HSplit"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 1.8
-
-[node name="SettingsPanel" type="Control" parent="MarginContainer/HSplit/Right"]
+[node name="StartButton" type="Button" parent="MenuLayer/StartMenuItem"]
 unique_name_in_owner = true
-visible = false
-layout_mode = 2
-
-[node name="VBox" type="VBoxContainer" parent="MarginContainer/HSplit/Right/SettingsPanel"]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 16
+focus_mode = 0
 
-[node name="Header" type="HBoxContainer" parent="MarginContainer/HSplit/Right/SettingsPanel/VBox"]
+[node name="ContinueMenuItem" type="Control" parent="MenuLayer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchor_left = 0.1
+anchor_top = 0.57
+anchor_right = 0.62
+anchor_bottom = 0.64
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ContinueTextDark" type="TextureRect" parent="MenuLayer/ContinueMenuItem"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch_mode = 5
+
+[node name="ContinueTextGlow" type="TextureRect" parent="MenuLayer/ContinueMenuItem"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch_mode = 5
+
+[node name="ContinueFallbackLabel" type="Label" parent="MenuLayer/ContinueMenuItem"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.88, 0.92, 0.72, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.65)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 34
+text = "继续冒险"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ContinueButton" type="Button" parent="MenuLayer/ContinueMenuItem"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+
+[node name="SettingsMenuItem" type="Control" parent="MenuLayer"]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.1
+anchor_top = 0.65
+anchor_right = 0.62
+anchor_bottom = 0.72
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SettingsTextDark" type="TextureRect" parent="MenuLayer/SettingsMenuItem"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch_mode = 5
+
+[node name="SettingsTextGlow" type="TextureRect" parent="MenuLayer/SettingsMenuItem"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch_mode = 5
+
+[node name="SettingsFallbackLabel" type="Label" parent="MenuLayer/SettingsMenuItem"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.88, 0.92, 0.72, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.65)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 34
+text = "设置"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SettingsButton" type="Button" parent="MenuLayer/SettingsMenuItem"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+
+[node name="QuitMenuItem" type="Control" parent="MenuLayer"]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.1
+anchor_top = 0.73
+anchor_right = 0.62
+anchor_bottom = 0.8
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="QuitTextDark" type="TextureRect" parent="MenuLayer/QuitMenuItem"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch_mode = 5
+
+[node name="QuitTextGlow" type="TextureRect" parent="MenuLayer/QuitMenuItem"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch_mode = 5
+
+[node name="QuitFallbackLabel" type="Label" parent="MenuLayer/QuitMenuItem"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.88, 0.92, 0.72, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.65)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 34
+text = "退出游戏"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QuitButton" type="Button" parent="MenuLayer/QuitMenuItem"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+
+[node name="VersionArea" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.04
+anchor_top = 0.91
+anchor_right = 0.38
+anchor_bottom = 0.98
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VersionLabel" type="Label" parent="VersionArea"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.86, 0.92, 0.74, 0.82)
+text = "原型 v0.3.2"
+vertical_alignment = 1
+
+[node name="VersionHotspot" type="Button" parent="VersionArea"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+
+[node name="MiniGameLayer" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TargetLayer" type="Control" parent="MiniGameLayer"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ProjectileLayer" type="Control" parent="MiniGameLayer"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SettingsOverlay" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OverlayDim" type="ColorRect" parent="SettingsOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.04, 0.03, 0.45)
+
+[node name="SettingsPanel" type="PanelContainer" parent="SettingsOverlay"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(560, 560)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -280.0
+offset_right = 280.0
+offset_bottom = 280.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SettingsMargin" type="MarginContainer" parent="SettingsOverlay/SettingsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 28
+
+[node name="VBox" type="VBoxContainer" parent="SettingsOverlay/SettingsPanel/SettingsMargin"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Header" type="HBoxContainer" parent="SettingsOverlay/SettingsPanel/SettingsMargin/VBox"]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="MarginContainer/HSplit/Right/SettingsPanel/VBox/Header"]
+[node name="SettingsTitle" type="Label" parent="SettingsOverlay/SettingsPanel/SettingsMargin/VBox/Header"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 28
 text = "游戏设置"
 
-[node name="CloseButton" type="Button" parent="MarginContainer/HSplit/Right/SettingsPanel/VBox/Header"]
+[node name="CloseButton" type="Button" parent="SettingsOverlay/SettingsPanel/SettingsMargin/VBox/Header"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(44, 44)
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 size_flags_horizontal = 10
 text = "×"
 
-[node name="BGMArea" type="VBoxContainer" parent="MarginContainer/HSplit/Right/SettingsPanel/VBox"]
+[node name="MasterArea" type="VBoxContainer" parent="SettingsOverlay/SettingsPanel/SettingsMargin/VBox"]
 layout_mode = 2
-theme_override_constants/separation = 4
+theme_override_constants/separation = 6
 
-[node name="Label" type="Label" parent="MarginContainer/HSplit/Right/SettingsPanel/VBox/BGMArea"]
-layout_mode = 2
-text = "背景音乐"
-
-[node name="BGMSlider" type="HSlider" parent="MarginContainer/HSplit/Right/SettingsPanel/VBox/BGMArea"]
+[node name="MasterLabel" type="Label" parent="SettingsOverlay/SettingsPanel/SettingsMargin/VBox/MasterArea"]
 unique_name_in_owner = true
-layout_mode = 2
-step = 10.0
-value = 100.0
-tick_count = 11
-ticks_on_borders = true
-script = ExtResource("jelly")
-
-[node name="SFXArea" type="VBoxContainer" parent="MarginContainer/HSplit/Right/SettingsPanel/VBox"]
-layout_mode = 2
-theme_override_constants/separation = 4
-
-[node name="Label" type="Label" parent="MarginContainer/HSplit/Right/SettingsPanel/VBox/SFXArea"]
-layout_mode = 2
-text = "音效"
-
-[node name="SFXSlider" type="HSlider" parent="MarginContainer/HSplit/Right/SettingsPanel/VBox/SFXArea"]
-unique_name_in_owner = true
-layout_mode = 2
-step = 10.0
-value = 100.0
-tick_count = 11
-ticks_on_borders = true
-script = ExtResource("jelly")
-
-[node name="MasterArea" type="VBoxContainer" parent="MarginContainer/HSplit/Right/SettingsPanel/VBox"]
-layout_mode = 2
-theme_override_constants/separation = 4
-
-[node name="Label" type="Label" parent="MarginContainer/HSplit/Right/SettingsPanel/VBox/MasterArea"]
 layout_mode = 2
 text = "主音量"
 
-[node name="MasterSlider" type="HSlider" parent="MarginContainer/HSplit/Right/SettingsPanel/VBox/MasterArea"]
+[node name="MasterSlider" type="HSlider" parent="SettingsOverlay/SettingsPanel/SettingsMargin/VBox/MasterArea"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 step = 10.0
 value = 100.0
@@ -180,29 +496,68 @@ tick_count = 11
 ticks_on_borders = true
 script = ExtResource("jelly")
 
-[node name="LanguageArea" type="VBoxContainer" parent="MarginContainer/HSplit/Right/SettingsPanel/VBox"]
+[node name="SFXArea" type="VBoxContainer" parent="SettingsOverlay/SettingsPanel/SettingsMargin/VBox"]
 layout_mode = 2
-theme_override_constants/separation = 4
+theme_override_constants/separation = 6
 
-[node name="Label" type="Label" parent="MarginContainer/HSplit/Right/SettingsPanel/VBox/LanguageArea"]
+[node name="SFXLabel" type="Label" parent="SettingsOverlay/SettingsPanel/SettingsMargin/VBox/SFXArea"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "音效"
+
+[node name="SFXSlider" type="HSlider" parent="SettingsOverlay/SettingsPanel/SettingsMargin/VBox/SFXArea"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+step = 10.0
+value = 100.0
+tick_count = 11
+ticks_on_borders = true
+script = ExtResource("jelly")
+
+[node name="BGMArea" type="VBoxContainer" parent="SettingsOverlay/SettingsPanel/SettingsMargin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="BGMLabel" type="Label" parent="SettingsOverlay/SettingsPanel/SettingsMargin/VBox/BGMArea"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "背景音乐"
+
+[node name="BGMSlider" type="HSlider" parent="SettingsOverlay/SettingsPanel/SettingsMargin/VBox/BGMArea"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+step = 10.0
+value = 100.0
+tick_count = 11
+ticks_on_borders = true
+script = ExtResource("jelly")
+
+[node name="LanguageArea" type="VBoxContainer" parent="SettingsOverlay/SettingsPanel/SettingsMargin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="LanguageLabel" type="Label" parent="SettingsOverlay/SettingsPanel/SettingsMargin/VBox/LanguageArea"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "语言"
 
-[node name="LanguageOption" type="OptionButton" parent="MarginContainer/HSplit/Right/SettingsPanel/VBox/LanguageArea"]
+[node name="LanguageOption" type="OptionButton" parent="SettingsOverlay/SettingsPanel/SettingsMargin/VBox/LanguageArea"]
 unique_name_in_owner = true
 layout_mode = 2
 item_count = 2
 popup/item_0/id = 0
 popup/item_1/id = 1
 
-[node name="ApplyButton" type="Button" parent="MarginContainer/HSplit/Right/SettingsPanel/VBox"]
+[node name="ApplyButton" type="Button" parent="SettingsOverlay/SettingsPanel/SettingsMargin/VBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(180, 48)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "应用设置"
 
-[node name="StatusLabel" type="Label" parent="MarginContainer/HSplit/Right/SettingsPanel/VBox"]
+[node name="StatusLabel" type="Label" parent="SettingsOverlay/SettingsPanel/SettingsMargin/VBox"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
