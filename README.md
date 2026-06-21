@@ -27,28 +27,28 @@
 
 ```text
 卡牌复刻/
-├─ scenes/
-│  ├─ main_menu.tscn
-│  ├─ adventure_scene.tscn
-│  ├─ battle_scene.tscn
-│  └─ battle_card.tscn
-├─ scripts/
-│  ├─ battle_scene.gd
-│  ├─ battle_card.gd
-│  ├─ battle_config.gd
-│  ├─ battle_state.gd
-│  ├─ card_pool.gd
-│  └─ adventure_*.gd
-├─ Data/cards/
-│  ├─ attack.json
-│  ├─ action.json
-│  └─ equip.json
-├─ assets/
-│  ├─ cards/battle_card_pet/
-│  ├─ ui/battle_scene_pet_spring/
-│  └─ card_template/
-├─ docs/ai_prompts/
-└─ project.godot
+├─ scenes/                         # Godot 场景文件
+│  ├─ main_menu.tscn               # 主菜单场景
+│  ├─ adventure_scene.tscn         # 冒险节点选择场景
+│  ├─ battle_scene.tscn            # 战斗主场景
+│  └─ battle_card.tscn             # 单张战斗卡牌 UI 场景
+├─ scripts/                        # GDScript 逻辑脚本
+│  ├─ battle_scene.gd              # 战斗流程、手牌与 HUD 控制
+│  ├─ battle_card.gd               # 单张卡牌显示与交互逻辑
+│  ├─ battle_config.gd             # 战斗布局、手牌位置与显示配置
+│  ├─ battle_state.gd              # 战斗运行时状态数据
+│  ├─ card_pool.gd                 # 卡牌池加载与卡牌数据查询
+│  └─ adventure_*.gd               # 冒险流程、节点与玩家状态脚本
+├─ Data/cards/                     # 卡牌 JSON 数据
+│  ├─ attack.json                  # 攻击牌定义
+│  ├─ action.json                  # 行动牌定义
+│  └─ equip.json                   # 装备牌定义
+├─ assets/                         # 美术与 UI 资源
+│  ├─ cards/battle_card_pet/       # 萌宠风格战斗卡牌分层素材
+│  ├─ ui/battle_scene_pet_spring/  # 春日森林战斗场景 UI 素材
+│  └─ card_template/               # 早期卡牌模板与缩放参考素材
+├─ docs/ai_prompts/                # 项目设计、提示词与规范文档
+└─ project.godot                   # Godot 项目配置入口
 ```
 
 ## 运行方式

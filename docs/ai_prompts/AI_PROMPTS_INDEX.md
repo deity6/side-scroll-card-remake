@@ -16,7 +16,7 @@
 ### `docs/ai_prompts/注意事项.md`
 
 - 作用：工程约束与兼容性规则。
-- 内容：Godot 4.4.1 兼容、GDScript 缩进、`.tscn/.gd` 同步、Autoload、PowerShell 中文写入风险、Debug 逻辑复用等。
+- 内容：Godot 4.4.1 兼容、GDScript 缩进、英文定义中文注释、`.tscn/.gd` 同步、Autoload、PowerShell 中文写入风险、Debug 逻辑复用、安全与发布等。
 - 适用场景：任何代码或场景改动前都应先确认。
 
 ### `docs/ai_prompts/00_总控提示词.md`
@@ -52,7 +52,7 @@
 ### `docs/ai_prompts/05_战斗场景与卡牌素材.md`
 
 - 作用：v0.3.2 战斗场景和 battle card 素材接入规范。
-- 内容：正式资源路径、`battle_scene` 节点原则、`battle_card` 分层、15 层以内 z-index 规划和手牌飞入规则。
+- 内容：正式资源路径、`battle_scene` 节点原则、`battle_card` 分层关键节点中文注释、15 层以内 z-index 规划和手牌飞入规则。
 - 适用场景：继续调整战斗场景、卡牌 UI、手牌动画和渲染层级。
 
 ### `docs/ai_prompts/ui设计.md`

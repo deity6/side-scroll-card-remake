@@ -2,3 +2,11 @@
 *.tmp
 *.import
 *.uid
+.env
+.env.*
+*.pem
+*.key
+*.pfx
+*.p12
+*.crt
+export_presets.cfg
