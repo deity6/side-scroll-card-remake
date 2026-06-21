@@ -4,6 +4,8 @@
 
 # --- 子场景引用 ---
 const BATTLE_CARD_SCENE: PackedScene = preload("res://scenes/battle_card.tscn")
+const CARD_Z_STEP: int = 1
+const CARD_ENTRY_Z: int = 10
 
 # --- 状态 ---
 var battle: BattleState = null
@@ -17,6 +19,14 @@ var _hovered_index: int = -1
 ## 入场动画锁：入场期间忽略悬浮信号，避免 _position_cards 与入场动画冲突
 var _entry_animating: bool = false
 
+## 根据手牌顺序设置父卡牌层级，给每张卡预留足够 z 段，避免子节点穿透相邻卡牌。
+func _card_stack_z(index: int) -> int:
+	return index * CARD_Z_STEP
+
+## 发牌/抽牌飞入时使用前景层级，保证新卡从现有手牌上方插入。
+func _card_entry_z(_index: int) -> int:
+	return CARD_ENTRY_Z
+
 # --- 胜利面板经验/升级动画状态 ---
 ## 进入战斗前的经验值/等级/升级门槛（用于胜利面板动画起点）
 var _pre_exp: int = 0
@@ -24,7 +34,7 @@ var _pre_level: int = 1
 var _pre_exp_to_next: int = 20
 
 # --- UI节点引用 ---
-@onready var enemy_sprite: ColorRect = %EnemySprite
+@onready var enemy_sprite: TextureRect = %EnemySprite
 @onready var enemy_hp_bar: ProgressBar = %EnemyHPBar
 @onready var enemy_hp_label: Label = %EnemyHPLabel
 @onready var enemy_name_label: Label = %EnemyNameLabel
@@ -34,6 +44,7 @@ var _pre_exp_to_next: int = 20
 @onready var player_ap_label: Label = %PlayerAPLabel
 @onready var hand_container: Control = %HandContainer
 @onready var end_turn_button: Button = %EndTurnButton
+@onready var back_button: Button = %BackButton
 @onready var deck_count_label: Label = %DeckCountLabel
 @onready var discard_count_label: Label = %DiscardCountLabel
 @onready var result_panel: PanelContainer = %ResultPanel
@@ -63,6 +74,7 @@ func _ready() -> void:
 	battle.card_played.connect(_on_card_played)
 	battle.equip_triggered.connect(_on_equip_triggered)
 	end_turn_button.pressed.connect(_on_end_turn_pressed)
+	back_button.pressed.connect(_on_back_pressed)
 	result_confirm_button.pressed.connect(_on_confirm_pressed)
 	result_retry_button.pressed.connect(_on_retry_pressed)
 	result_panel.visible = false
@@ -215,7 +227,7 @@ func _position_cards(animate: bool = false) -> void:
 			card.scale = target["scale"]
 			card.modulate.a = 1.0
 			card.visible = true
-		card.z_index = i
+		card.z_index = _card_stack_z(i)
 
 # ============================================================
 # 手牌 UI 管理
@@ -240,6 +252,7 @@ func _create_hand_ui() -> void:
 		_hand_card_nodes.append(card_node)
 		card_node.position = BattleConfig.CARD_ENTRY_ORIGIN
 		card_node.modulate.a = 0.0
+		card_node.z_index = _card_entry_z(i)
 	# 逐张延迟播放弧线入场动画
 	for i: int in range(n):
 		var card_node = _hand_card_nodes[i]
@@ -261,7 +274,7 @@ func _create_hand_ui() -> void:
 		, 0.0, 1.0, BattleConfig.CARD_ENTRY_DURATION)
 		tw.parallel().tween_property(card_node, "rotation", deg_to_rad(target["angle"]), BattleConfig.CARD_ENTRY_DURATION)
 		tw.parallel().tween_property(card_node, "scale", target["scale"], BattleConfig.CARD_ENTRY_DURATION)
-		tw.tween_callback(func(_card = card_node, _idx = i): _card.z_index = _idx)
+		tw.tween_callback(func(_card = card_node, _idx = i): _card.z_index = _card_stack_z(_idx))
 
 	# 入场动画全部结束后解锁，悬浮信号恢复生效
 	var _unlock_delay: float = n * BattleConfig.CARD_ENTRY_STAGGER + BattleConfig.CARD_ENTRY_DURATION + 0.05
@@ -322,6 +335,7 @@ func _refresh_hand(animate: bool = true) -> void:
 		var card_node = _create_card_node(battle.hand[i], i)
 		card_node.position = BattleConfig.CARD_ENTRY_ORIGIN
 		card_node.modulate.a = 0.0
+		card_node.z_index = _card_entry_z(i)
 		_hand_card_nodes.append(card_node)
 	# 所有卡重新排列（已有卡平滑移动，新卡弧线入场）
 	if animate:
@@ -338,7 +352,7 @@ func _refresh_hand(animate: bool = true) -> void:
 			tw.tween_property(card, "position", target["pos"], BattleConfig.HAND_POSITION_DURATION)
 			tw.tween_property(card, "rotation", deg_to_rad(target["angle"]), BattleConfig.HAND_POSITION_DURATION)
 			tw.tween_property(card, "scale", target["scale"], BattleConfig.HAND_POSITION_DURATION)
-			card.z_index = i
+			card.z_index = _card_stack_z(i)
 		# 新卡弧线入场
 		for i: int in range(old_count, n):
 			var card_node = _hand_card_nodes[i]
@@ -360,7 +374,7 @@ func _refresh_hand(animate: bool = true) -> void:
 			, 0.0, 1.0, BattleConfig.CARD_ENTRY_DURATION)
 			tw.parallel().tween_property(card_node, "rotation", deg_to_rad(target["angle"]), BattleConfig.CARD_ENTRY_DURATION)
 			tw.parallel().tween_property(card_node, "scale", target["scale"], BattleConfig.CARD_ENTRY_DURATION)
-			tw.tween_callback(func(_card = card_node, _idx = i): _card.z_index = _idx)
+			tw.tween_callback(func(_card = card_node, _idx = i): _card.z_index = _card_stack_z(_idx))
 	else:
 		_position_cards(false)
 

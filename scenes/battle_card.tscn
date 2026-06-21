@@ -1,6 +1,240 @@
-[gd_scene load_steps=2 format=3 uid="uid://cncdfdfoefub8"]
+[gd_scene load_steps=8 format=3 uid="uid://cncdfdfoefub8"]
 
 [ext_resource type="Script" uid="uid://dq7ubun1ex6f7" path="res://scripts/battle_card.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://c8e82hli2mcln" path="res://assets/cards/battle_card_pet/card_base_attack_gold.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://exclo1ayhv23" path="res://assets/cards/battle_card_pet/card_frame_attack_window.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://c082jgsia0cu7" path="res://assets/cards/battle_card_pet/desc_panel_large.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://duyomicg4eb03" path="res://assets/cards/battle_card_pet/type_badge.png" id="5"]
+[ext_resource type="Texture2D" uid="uid://defmjvr6dkd8v" path="res://assets/cards/battle_card_pet/cost_badge_acorn.png" id="6"]
 
-[node name="BattleCard" type="PanelContainer"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hl"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 0.94, 0.32, 0.95)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="BattleCard" type="Control"]
+custom_minimum_size = Vector2(240, 360)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 240.0
+offset_bottom = 360.0
 script = ExtResource("1")
+
+[node name="CardBase" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -1.0
+offset_right = -4.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CardFrame" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ArtFrame" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+offset_left = 82.0
+offset_top = 100.0
+offset_right = 154.0
+offset_bottom = 146.0
+mouse_filter = 2
+texture = ExtResource("3")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CardName" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.494
+anchor_top = 0.088
+anchor_right = 0.494
+anchor_bottom = 0.088
+offset_left = -55.56
+offset_top = -28.68
+offset_right = 55.44
+offset_bottom = 20.32
+mouse_filter = 2
+texture = ExtResource("4")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CardNameLabel" type="RichTextLabel" parent="CardName"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 12.0
+offset_right = 5.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7, 0.7)
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.21, 0.13, 0.06, 1)
+theme_override_font_sizes/normal_font_size = 14
+text = "最多五个字"
+fit_content = true
+scroll_active = false
+autowrap_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CardDescLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.74
+anchor_right = 0.5
+anchor_bottom = 0.74
+offset_left = -72.0
+offset_top = -31.4
+offset_right = 72.0
+offset_bottom = 31.6
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.21, 0.14, 0.08, 1)
+theme_override_font_sizes/normal_font_size = 14
+text = "Description"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TypeLabelArea" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.504
+anchor_top = 0.922
+anchor_right = 0.504
+anchor_bottom = 0.922
+offset_left = -87.96
+offset_top = -33.92
+offset_right = 89.04
+offset_bottom = 32.08
+mouse_filter = 2
+texture = ExtResource("5")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TypeLabel" type="RichTextLabel" parent="TypeLabelArea"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.433
+anchor_top = 0.395
+anchor_right = 0.564
+anchor_bottom = 0.592
+offset_left = -25.641
+offset_top = -6.07
+offset_right = 43.172
+offset_bottom = 10.928
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.8, 0.8)
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.21, 0.13, 0.06, 1)
+theme_override_font_sizes/normal_font_size = 13
+text = "类型牌"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CostArea" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 4.0
+offset_top = 7.0
+offset_right = 66.0
+offset_bottom = 65.0
+mouse_filter = 2
+
+[node name="CostIcon" type="TextureRect" parent="CostArea"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.134
+anchor_right = 0.707
+anchor_bottom = 0.744
+offset_left = 2.0
+offset_top = -6.772
+offset_right = 18.408
+offset_bottom = 15.068
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CostValue" type="Label" parent="CostArea"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.516
+anchor_top = 0.53
+anchor_right = 0.516
+anchor_bottom = 0.53
+offset_left = -12.992
+offset_top = -13.74
+offset_right = 19.008
+offset_bottom = 17.26
+scale = Vector2(0.8, 0.8)
+theme_override_colors/font_color = Color(0.22, 0.12, 0.04, 1)
+theme_override_font_sizes/font_size = 22
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Highlight" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.037
+anchor_top = 0.031
+anchor_right = 0.958
+anchor_bottom = 0.967
+offset_left = 0.12
+offset_top = -0.160001
+offset_right = 0.0799866
+offset_bottom = -0.120026
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hl")
+
+[node name="ShadowOverlay" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 11.0
+offset_right = -10.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.45)

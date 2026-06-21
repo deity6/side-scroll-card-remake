@@ -1,8 +1,9 @@
 # AGENTS.md
 Read this md using UTF-8 (without BOM)
+> Please use Chinese to communicate in the conversation context.
 > 本文件作为仓库入口，放 **入口规则、开发流程、强制约束速查**。
 > 具体设计、数值、UI 规范不写在这里，统一指向文档索引。(细则在## 3. 文档与提示词索引）
-> 对话上下文请用中文交流
+
 
 ## 1. Project Overview（项目基础信息）
 - 项目类型：Godot 4.4.x / GDScript（当前开发环境 Godot 4.4.1）

@@ -111,13 +111,13 @@ func _apply_localization() -> void:
 		settings_button.text = "Settings"
 		start_button.text = "Start"
 		quit_button.text = "Quit"
-		version_label.text = "Prototype v0.2"
+		version_label.text = "Prototype v0.3.2"
 		continue_button.text = "Continue"
 	else:
 		settings_button.text = "设置"
 		start_button.text = "开始冒险"
 		quit_button.text = "退出游戏"
-		version_label.text = "原型 v0.2"
+		version_label.text = "原型 v0.3.2"
 		continue_button.text = "继续冒险"
 
 func _check_continue() -> void:
