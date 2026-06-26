@@ -45,9 +45,9 @@ Read this md using UTF-8 (without BOM)
 
 ## 4. 强制约束速查（提炼自仓库规范，不展开细节）
 - **重要改动前必须备份**：删除或大规模修改关键文件前，先 git stash 或 git commit 做本地备份，防止误操作无法回退。
+- **文件读写必须通过 `desktop-commander` MCP**：所有文件的读取、修改、搜索、终端命令执行等操作，必须且只能使用 `desktop-commander` MCP 工具（如 `mcp__desktop_commander__read_file`、`mcp__desktop_commander__edit_block`、`mcp__desktop_commander__write_file`、`mcp__desktop_commander__start_process` 等）。禁止使用内置的 `exec_command`、`read_mcp_resource`（文件类）等其他方式读写项目文件。
 - Godot 4.4 / 4.4.1 兼容，禁止使用 4.5+ 新增 API。
 - GDScript 统一 4 空格缩进；.gd/.tscn 统一 LF；统一 UTF-8 无 BOM。
-- 含中文内容时，避免 PowerShell Set-Content 管道写入，优先用 Python / apply_patch。
 - Autoload 用 get_node 获取实例，不把实例脚本当作静态类 preload 调用。
 - 同一信号不要在场景文件和脚本文件中重复连接。
 - @onready 对象在 _ready() 前可能为空，setter 需做空值保护。
