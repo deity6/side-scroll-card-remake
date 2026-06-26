@@ -1,4 +1,4 @@
-﻿# 卡牌复刻
+# 卡牌复刻
 
 > Godot 4.4.1 / GDScript / 竖版卡牌 Roguelike 原型 / v0.3.4
 
@@ -11,7 +11,7 @@
 - 音效映射配置文件 Data/sfx_mapping.json，新增音效只需添加映射和素材文件，无需改代码。
 - 主菜单重构：背景从绿色占位恢复黑色，按钮和游戏名居中对齐。
 - 彩蛋小游戏代码从 menu_controller.gd 分离到独立脚本 easter_egg_minigame.gd，通过 setup() 注入节点引用。
-- 修复 attle_scene.gd 中 _on_card_played 未使用参数警告。
+- 修复 battle_scene.gd 中 _on_card_played 未使用参数警告。
 - 清理 58 个临时文件和调试脚本，更新 .gitignore。
 - 移除 BGM 素材引用（暂未添加），SoundManager BGM 接口保留但不加载。
 
@@ -26,7 +26,7 @@
 
 ## 目录结构
 
-`	ext
+```
 卡牌复刻/
 ├─ scenes/                         # Godot 场景文件
 │  ├─ main_menu.tscn               # 主菜单场景（黑色背景 + 居中布局）
@@ -60,12 +60,12 @@
 │  └─ card_template/               # 早期卡牌模板与缩放参考素材
 ├─ docs/ai_prompts/                # 项目设计、提示词与规范文档
 └─ project.godot                   # Godot 项目配置入口
-`
+```
 
 ## 运行方式
 
-1. 使用 Godot 4.4.1 打开 project.godot。
-2. 运行主场景 es://scenes/main_menu.tscn。
+1. 使用 Godot 4.4.1 打开 `project.godot`。
+2. 运行主场景 `res://scenes/main_menu.tscn`。
 3. 从主菜单进入冒险或战斗流程。
 
 ## 音效系统
@@ -73,13 +73,13 @@
 ### 架构
 
 - **SoundManager**：全局 Autoload 单例，管理所有 SFX 和 BGM 的加载、播放、音量控制。
-- **音效映射**：Data/sfx_mapping.json 定义音效键到文件路径的映射，新增音效只需添加映射和素材文件。
+- **音效映射**：`Data/sfx_mapping.json` 定义音效键到文件路径的映射，新增音效只需添加映射和素材文件。
 - **播放器池**：每个音效键最多同时播放 4 个实例，超出时淘汰最旧的，避免爆音。
-- **随机 pitch**：play_sfx_varied() 随机调整 ±5% 音高，避免重复播放的机械感。
+- **随机 pitch**：`play_sfx_varied()` 随机调整 ±5% 音高，避免重复播放的机械感。
 
 ### 使用方式
 
-`gdscript
+```gdscript
 # 播放一次性音效
 SoundManager.play_sfx("battle_damage_deal")
 
@@ -91,7 +91,7 @@ SoundManager.play_bgm("bgm_battle", 0.8)
 
 # BGM 淡出停止
 SoundManager.stop_bgm(0.8)
-`
+```
 
 ### 音效清单
 
@@ -104,15 +104,15 @@ SoundManager.stop_bgm(0.8)
 
 ## 资源规范
 
-- 正式战斗 UI 素材位于 ssets/ui/battle_scene_pet_spring/。
-- 正式卡牌素材位于 ssets/cards/battle_card_pet/。
-- 音效文件统一使用 MP3 格式（ssets/audio/sfx/），映射配置在 Data/sfx_mapping.json。
-- AI 制作过程文件可放在 ssets/ai制作/，正式场景引用优先使用 ssets/cards/ 和 ssets/ui/ 下的稳定命名资源。
-- Godot 自动生成的 .import 不提交。
+- 正式战斗 UI 素材位于 `assets/ui/battle_scene_pet_spring/`。
+- 正式卡牌素材位于 `assets/cards/battle_card_pet/`。
+- 音效文件统一使用 MP3 格式（`assets/audio/sfx/`），映射配置在 `Data/sfx_mapping.json`。
+- AI 制作过程文件可放在 `assets/ai制作/`，正式场景引用优先使用 `assets/cards/` 和 `assets/ui/` 下的稳定命名资源。
+- Godot 自动生成的 `.import` 不提交。
 
 ## 版本历史
 
-完整更新记录见 CHANGELOG.md。
+完整更新记录见 `CHANGELOG.md`。
 
 | 版本 | 说明 |
 | --- | --- |
