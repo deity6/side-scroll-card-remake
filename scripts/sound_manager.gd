@@ -1,4 +1,4 @@
-extends Node
+﻿extends Node
 
 # ============================================================
 # SoundManager - 全局音效管理器 (Autoload 单例)
@@ -69,7 +69,7 @@ func _load_mapping() -> void:
 				push_warning("SoundManager: 无法加载音效 " + key + " -> " + path)
 		else:
 			push_warning("SoundManager: 音效文件不存在 " + key + " -> " + path)
-	# BGM 映射暂不加载（素材待后续添加）
+	# BGM 映射暂不加载（素材待后续版本添加，v0.3.4+）
 	# var bgm_data: Dictionary = data.get("bgm", {})
 	# for key in bgm_data:
 	# 	var path: String = bgm_data[key]
@@ -77,7 +77,7 @@ func _load_mapping() -> void:
 	# 		var stream = load(path) as AudioStream
 	# 		if stream:
 	# 			_bgm_map[key] = stream
-	print("SoundManager: 已加载 %d 个 SFX, %d 个 BGM" % [_sfx_map.size(), _bgm_map.size()])
+	print("SoundManager: 已加载 %d 个 SFX, %d 个 BGM（BGM 暂未添加）" % [_sfx_map.size(), _bgm_map.size()])
 
 
 ## 创建 BGM 播放器并挂载到播放树
@@ -218,3 +218,4 @@ func has_bgm(key: String) -> bool:
 ## 获取当前播放的 BGM key
 func get_current_bgm() -> String:
 	return _current_bgm
+
