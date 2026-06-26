@@ -8,8 +8,6 @@
 
 config_version=5
 
-"ï»¿config_version"=5
-
 [application]
 
 config/name="卡牌复刻"
@@ -22,11 +20,13 @@ config/icon="res://icon.svg"
 SettingsManager="*res://scenes/settings_manager.tscn"
 MCPGameBridge="*res://addons/godot_mcp/game_bridge/mcp_game_bridge.gd"
 GlobalBattleRequest="*res://scripts/global_battle_request.gd"
+SoundManager="*res://scripts/sound_manager.gd"
 
 [display]
 
 window/size/viewport_width=720
 window/size/viewport_height=1280
+window/handheld/orientation=1
 
 [dotnet]
 
@@ -42,3 +42,8 @@ bind_mode=0
 custom_bind_ip=""
 port_override_enabled=false
 port_override=6550
+
+[rendering]
+
+textures/vram_compression/import_etc2_astc=true
+audio/default_bus_layout="res://default_bus_layout.tres"

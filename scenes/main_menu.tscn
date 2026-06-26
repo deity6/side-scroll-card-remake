@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ddikab2r7s5np"]
 
-[ext_resource type="Script" uid="uid://7w6y2algnwea" path="res://scenes/main_menu.gd" id="1_ekxnf"]
+[ext_resource type="Script" uid="uid://7w6y2algnwea" path="res://scripts/menu_controller.gd" id="1_ekxnf"]
 [ext_resource type="Script" uid="uid://djb8vd6pebg8u" path="res://scripts/jelly_slider.gd" id="jelly"]
 
 [node name="MainMenu" type="Control"]
@@ -19,7 +19,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.55, 0.78, 0.62, 1)
+color = Color(0, 0, 0, 1)
 
 [node name="BackgroundLayers" type="Control" parent="."]
 unique_name_in_owner = true
@@ -110,9 +110,9 @@ mouse_filter = 2
 [node name="StartMenuItem" type="Control" parent="MenuLayer"]
 unique_name_in_owner = true
 layout_mode = 1
-anchor_left = 0.1
+anchor_left = 0.2
 anchor_top = 0.49
-anchor_right = 0.62
+anchor_right = 0.8
 anchor_bottom = 0.56
 grow_horizontal = 2
 grow_vertical = 2
@@ -172,9 +172,9 @@ focus_mode = 0
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
-anchor_left = 0.1
+anchor_left = 0.2
 anchor_top = 0.57
-anchor_right = 0.62
+anchor_right = 0.8
 anchor_bottom = 0.64
 grow_horizontal = 2
 grow_vertical = 2
@@ -233,9 +233,9 @@ focus_mode = 0
 [node name="SettingsMenuItem" type="Control" parent="MenuLayer"]
 unique_name_in_owner = true
 layout_mode = 1
-anchor_left = 0.1
+anchor_left = 0.2
 anchor_top = 0.65
-anchor_right = 0.62
+anchor_right = 0.8
 anchor_bottom = 0.72
 grow_horizontal = 2
 grow_vertical = 2
@@ -294,9 +294,9 @@ focus_mode = 0
 [node name="QuitMenuItem" type="Control" parent="MenuLayer"]
 unique_name_in_owner = true
 layout_mode = 1
-anchor_left = 0.1
+anchor_left = 0.2
 anchor_top = 0.73
-anchor_right = 0.62
+anchor_right = 0.8
 anchor_bottom = 0.8
 grow_horizontal = 2
 grow_vertical = 2
@@ -413,6 +413,54 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="FruitZone" type="ColorRect" parent="MiniGameLayer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.8, 0.2, 0.2, 0.15)
+
+[node name="LeafZone" type="ColorRect" parent="MiniGameLayer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.2, 0.8, 0.2, 0.15)
+
+[node name="LeafFadeLine" type="ColorRect" parent="MiniGameLayer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0.8, 0, 0.3)
+
+[node name="FruitFadeLine" type="ColorRect" parent="MiniGameLayer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.8, 0, 0, 0.3)
 
 [node name="SettingsOverlay" type="Control" parent="."]
 unique_name_in_owner = true

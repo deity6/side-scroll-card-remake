@@ -193,6 +193,7 @@ func _sync_cards() -> void:
 
 # 卡片点击：同一时间只能选中一张卡片
 func _on_card_selected(slot_idx: int) -> void:
+	SoundManager.play_sfx_varied("adv_card_select")
 	var slots: Array[PanelContainer] = [card_slot1, card_slot2, card_slot3]
 	var clicked: PanelContainer = slots[slot_idx]
 	# 如果点击的是已选中的卡片，取消选中
@@ -209,6 +210,7 @@ func _on_card_selected(slot_idx: int) -> void:
 # 关闭按钮：销毁当前卡片并替换为下一张（跳过=无奖励，补充下一个节点）
 func _on_card_close_requested(slot_idx: int) -> void:
 	if slot_idx < 0 or slot_idx >= _slot_card_data.size(): return
+	SoundManager.play_sfx("adv_card_dismiss")
 	var line_idx: int = _slot_card_data[slot_idx]
 	if not chapter.chapter_manager.is_close_allowed(line_idx): return
 	# 先取消选中状态
@@ -230,6 +232,7 @@ func _on_card_close_requested(slot_idx: int) -> void:
 # 动作按钮：进入节点事件（播放销毁动画后应用奖励并补充下一个节点）
 func _on_card_action_requested(slot_idx: int) -> void:
 	if slot_idx < 0 or slot_idx >= _slot_card_data.size(): return
+	SoundManager.play_sfx("adv_card_enter")
 	var line_idx: int = _slot_card_data[slot_idx]
 	if not chapter.chapter_manager.can_enter(line_idx): return
 	var node_type := chapter.chapter_manager.node_type(line_idx)
@@ -295,6 +298,7 @@ func _handle_battle_return() -> void:
 	# 胜利时额外发放奖励
 	if gbr.result == "win":
 		player.add_gold(gbr.result_gold)
+	SoundManager.play_sfx("reward_gold")
 	# 注意：经验/等级已由战斗面板计算并同步，不再重复 add_experience
 	# 存档更新
 	AdventureState.save_run(chapter.serialize())
@@ -304,6 +308,17 @@ func _handle_battle_return() -> void:
 
 # 根据节点类型应用奖励
 func _apply_node_reward(node_type: int) -> void:
+	# 播放节点对应音效
+	if node_type == ChapterNodeManager.NodeType.REST:
+		SoundManager.play_sfx("adv_rest_heal")
+	elif node_type == ChapterNodeManager.NodeType.SMITH:
+		SoundManager.play_sfx("adv_smith_craft")
+	elif node_type == ChapterNodeManager.NodeType.SHOP:
+		SoundManager.play_sfx("adv_shop_buy")
+	elif node_type == ChapterNodeManager.NodeType.CHEST:
+		SoundManager.play_sfx("adv_chest_open")
+	elif node_type == ChapterNodeManager.NodeType.NEXT_CHAPTER:
+		SoundManager.play_sfx("adv_chapter_advance")
 	if node_type == ChapterNodeManager.NodeType.BATTLE:
 		player.add_gold(5); player.add_experience(10)     # 普通战斗奖励
 	elif node_type == ChapterNodeManager.NodeType.ELITE:
@@ -320,6 +335,7 @@ func _apply_node_reward(node_type: int) -> void:
 
 # --- 返回按钮 ---
 func _on_back_button_pressed() -> void:
+	SoundManager.play_sfx("ui_back")
 	AdventureState.save_run(chapter.serialize())  # 自动存档
 	# 整个冒险界面向右滑出屏幕
 	var screen_w = get_viewport_rect().size.x

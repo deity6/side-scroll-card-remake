@@ -398,6 +398,7 @@ func _remove_card_by_index(index: int) -> void:
 # ============================================================
 
 func _on_card_selected(index: int) -> void:
+	SoundManager.play_sfx("battle_card_select")
 	for card in _hand_card_nodes:
 		card.set_selected(false)
 	if _selected_card_index == index:
@@ -502,6 +503,7 @@ func _on_debug_shuffle_pressed() -> void:
 # ============================================================
 
 func _on_end_turn_pressed() -> void:
+	SoundManager.play_sfx_varied("battle_end_turn")
 	end_turn_button.disabled = true
 	battle.discard_hand()
 	battle.start_new_turn()
@@ -522,6 +524,7 @@ func _on_state_changed() -> void:
 	turn_label.text = "回合 %d" % battle.turn
 
 func _on_card_played(_card: Dictionary) -> void:
+	SoundManager.play_sfx_varied("battle_card_play")
 	pass
 
 func _on_equip_triggered(_equip_name: String, _value: int) -> void:
@@ -569,6 +572,7 @@ func _show_toast(text: String) -> void:
 ## 战斗胜利经验奖励动画 + 升级循环
 ## 在 _on_battle_won 中调用，动画结束后按钮才可用
 func _animate_exp_reward() -> void:
+	SoundManager.play_sfx("battle_exp_gain")
 	if not gbr:
 		return
 	# 禁用按钮，动画期间不可操作
@@ -642,6 +646,7 @@ func _animate_exp_reward() -> void:
 
 
 func _on_battle_won() -> void:
+	SoundManager.play_sfx("battle_victory")
 	result_panel.visible = true
 	# 初始化经验动画状态
 	if gbr:
@@ -665,6 +670,7 @@ func _on_battle_won() -> void:
 	_animate_exp_reward()
 
 func _on_battle_lost() -> void:
+	SoundManager.play_sfx("battle_defeat")
 	result_panel.visible = true
 	result_title_label.text = "战斗失败..."
 	result_desc_label.text = "你被击败了..."
@@ -676,6 +682,7 @@ func _on_battle_lost() -> void:
 		gbr.result_ap = battle.ap
 
 func _on_confirm_pressed() -> void:
+	SoundManager.play_sfx_varied("ui_click_default")
 	if gbr:
 		gbr.result = "win"
 		gbr.result_exp = gbr.get_reward_exp()
@@ -685,6 +692,7 @@ func _on_confirm_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/adventure_scene.tscn")
 
 func _on_retry_pressed() -> void:
+	SoundManager.play_sfx_varied("ui_click_default")
 	if gbr:
 		gbr.set_retry()
 		gbr.result_player_hp = 0  # 重试时恢复初始HP

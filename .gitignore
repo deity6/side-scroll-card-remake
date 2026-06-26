@@ -1,12 +1,26 @@
-﻿.godot/
-*.tmp
+﻿# Godot 缓存
+.godot/
+
+# Godot 自动生成的 import 文件
 *.import
+
+# 临时补丁文件（根目录）
+/*.py
+/*.bat
+
+# Godot 临时文件
+*.tmp
 *.uid
+
+# 环境文件
 .env
 .env.*
-*.pem
-*.key
-*.pfx
-*.p12
-*.crt
+
+# 导出配置
 export_presets.cfg
+
+# 系统/IDE
+.vs/
+android/
+.DS_Store
+Thumbs.db

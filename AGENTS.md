@@ -21,6 +21,10 @@ Read this md using UTF-8 (without BOM)
 - `addons/godot_mcp` 为辅助开发插件，不是运行必要前提；该插件声明 `godot_version_min="4.5"`，与当前 4.4.1 不完全兼容。
 
 ### 2.2 开发运行
+### 2.3 开发环境说明
+- Godot 编辑器运行时可同时修改文件（Godot 会弹出"重新加载"提示，点击确认即可同步）。
+- 但 **修改文件前必须做 git 备份**（见第4节约束）。
+
 ### 2.3 提交前检查
 - `.gd/.tscn` 统一使用 UTF-8（无 BOM）。
 - 统一使用 LF 换行：`* text=auto eol=lf`。
@@ -39,6 +43,7 @@ Read this md using UTF-8 (without BOM)
   - 新增或改名 `docs/ai_prompts/` 下的文档时，及时更新索引
 
 ## 4. 强制约束速查（提炼自仓库规范，不展开细节）
+- **重要改动前必须备份**：删除或大规模修改关键文件前，先 git stash 或 git commit 做本地备份，防止误操作无法回退。
 - Godot 4.4 / 4.4.1 兼容，禁止使用 4.5+ 新增 API。
 - GDScript 统一 4 空格缩进；`.gd/.tscn` 统一 LF；统一 UTF-8 无 BOM。
 - 含中文内容时，避免 PowerShell `Set-Content` 管道写入，优先用 Python / apply_patch。

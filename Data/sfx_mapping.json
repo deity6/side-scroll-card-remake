@@ -1,0 +1,37 @@
+{
+  "_comment": "音效键→文件路径映射。路径相对于 res://。缺失的文件 SoundManager 会自动跳过并打印警告。",
+  "sfx": {
+	"ui_click_default": "res://assets/audio/sfx/ui/ui_click_default.mp3",
+	"ui_click_start_new": "res://assets/audio/sfx/ui/ui_click_start_new.mp3",
+	"ui_click_start_continue": "res://assets/audio/sfx/ui/ui_click_start_continue.mp3",
+	"ui_dialog_popup": "res://assets/audio/sfx/ui/ui_dialog_popup.mp3",
+	"ui_hover": "res://assets/audio/sfx/ui/ui_hover.mp3",
+	"ui_back": "res://assets/audio/sfx/ui/ui_back.mp3",
+	"adv_card_select": "res://assets/audio/sfx/adventure/adv_card_select.mp3",
+	"adv_card_dismiss": "res://assets/audio/sfx/adventure/adv_card_dismiss.mp3",
+	"adv_card_enter": "res://assets/audio/sfx/adventure/adv_card_enter.mp3",
+	"adv_rest_heal": "res://assets/audio/sfx/adventure/adv_rest_heal.mp3",
+	"adv_smith_craft": "res://assets/audio/sfx/adventure/adv_smith_craft.mp3",
+	"adv_shop_buy": "res://assets/audio/sfx/adventure/adv_shop_buy.mp3",
+	"adv_chest_open": "res://assets/audio/sfx/adventure/adv_chest_open.mp3",
+	"adv_chapter_advance": "res://assets/audio/sfx/adventure/adv_chapter_advance.mp3",
+	"battle_card_draw": "res://assets/audio/sfx/battle/battle_card_draw.mp3",
+	"battle_card_select": "res://assets/audio/sfx/battle/battle_card_select.mp3",
+	"battle_card_play": "res://assets/audio/sfx/battle/battle_card_play.mp3",
+	"battle_damage_deal": "res://assets/audio/sfx/battle/battle_damage_deal.mp3",
+	"battle_damage_receive": "res://assets/audio/sfx/battle/battle_damage_receive.mp3",
+	"battle_armor_gain": "res://assets/audio/sfx/battle/battle_armor_gain.mp3",
+	"battle_heal": "res://assets/audio/sfx/battle/battle_heal.mp3",
+	"battle_end_turn": "res://assets/audio/sfx/battle/battle_end_turn.mp3",
+	"battle_victory": "res://assets/audio/sfx/battle/battle_victory.mp3",
+	"battle_defeat": "res://assets/audio/sfx/battle/battle_defeat.mp3",
+	"battle_exp_gain": "res://assets/audio/sfx/battle/battle_exp_gain.mp3",
+	"reward_level_up": "res://assets/audio/sfx/reward/reward_level_up.mp3",
+	"reward_gold": "res://assets/audio/sfx/reward/reward_gold.mp3",
+	"reward_card_gain": "res://assets/audio/sfx/reward/reward_card_gain.mp3"
+  },
+  "bgm": {
+	"bgm_menu": "res://assets/audio/bgm/bgm_menu.ogg",
+	"bgm_battle": "res://assets/audio/bgm/bgm_battle.ogg"
+  }
+}
